@@ -1,0 +1,36 @@
+<div class="container p-4">
+    <div class="row d-flex flex-row offset-md-2">
+        <div class="col-md-4">
+            <img src="{{path}}" alt="" style="max-width: 170px;">
+        </div>
+        <div class="col-md-4">
+            <h3>{{title}}</h3>
+            {{#if user}}
+            {{#if (admin user)}}
+            <a href="/product/edit/{{id}}"><i class="fas fa-edit"></i></a>
+            <a class="text-success" style="cursor: pointer;" id="delete"><i class="fas fa-trash"></i></a>
+            {{/if}}
+            {{/if}}
+            <p>{{description}}</p>
+            <hr>
+            <p class="text-success"><strong>${{price}}</strong></p>
+            {{!-- <form action="/addcart" method="POST"> --}}
+            {{!-- <label for="quantity">Quantity</label>
+            <input type="number" placeholder="" class="form-control" name="quantity"> --}}
+            <a href="/add-to-cart/{{id}}"><button class="btn btn-lg btn-block btn-success mt-4">Add to cart<i class="fas fa-shopping-cart">
+            </i></button></a>
+            {{!-- </form> --}}
+        </div>
+    </div>
+
+
+<script>
+    const btn = document.getElementById('delete');
+    btn.addEventListener('click', function(){
+    if(confirm('Are you really sure to delete this product')){
+        window.location = '/product/delete/{{id}}'
+    } else{
+        return false
+    }
+    })
+</script>

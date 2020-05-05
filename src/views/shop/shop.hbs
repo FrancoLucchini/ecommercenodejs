@@ -1,0 +1,54 @@
+{{#if products}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-4">
+            <div class="card text-center">
+                <div class="card-header">
+                    Purchase
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <td>{{this.item.title}}</td>
+                                <td>{{qty}}</td>
+                                <td>${{price}}</td>
+                                <td>Action</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row offset-md-3 mt-3">
+        <div class="col-md-6">
+            <strong>Total: ${{totalPrice}}</strong>
+        </div>
+        
+        <div class="col-md-6">
+            <a href="/checkout" type="button" class="btn btn-success">Checkout</a>
+        </div>
+    </div>
+
+    {{else}}
+    <div class="row">
+        <div class="col-md-6 offset-md-4">
+            <h2>No items in Cart</h2>
+        </div>
+    </div>
+    {{/if}}
+
+</div>

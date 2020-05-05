@@ -1,0 +1,31 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h3 class="text-center">Add product</h3>
+            <hr>
+            <form action="/product/add" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="Insert title">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="description" placeholder="Insert description">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="category" placeholder="Insert category">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="price" placeholder="Insert price">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" id="validatedCustomFile">
+                        <label class="custom-file-label" for="validatedCustomFile"
+                            aria-describedby="inputGroupFileAddon02">Choose Miniature</label>
+                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-block btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
