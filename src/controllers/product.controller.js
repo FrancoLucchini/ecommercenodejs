@@ -7,11 +7,12 @@ const path = require('path');
 const stripe = require('stripe')('sk_test_iHmNAmCjmIrKpzkcqC5gWBPA00RSFYzDyI');
 
 
+
 productCtrl = {}
 
 productCtrl.renderIndex = async(req, res) => {
-    let perPage = 12;
-    let page = req.params.page || 1;
+    const perPage = 12;
+    const page = req.params.page || 1;
 
     await Product
     .find({})
@@ -24,9 +25,10 @@ productCtrl.renderIndex = async(req, res) => {
         })
     });
 }
+
 productCtrl.renderProducts = async(req, res) => {
-    let perPage = 12;
-    let page = req.params.page || 1;
+    const perPage = 12;
+    const page = req.params.page || 1;
 
     await Product
     .find({})
@@ -38,6 +40,28 @@ productCtrl.renderProducts = async(req, res) => {
             res.render('products/products', {products, pagination: {page: page, pageCount: Math.ceil(count / perPage)}});
         })
     });
+}
+
+productCtrl.search = async(req, res) => {
+    const perPage = 12;
+    const _page = req.params.page || 1;
+    const query = new RegExp(req.query.search);
+    const normalQuery = req.query.search;
+
+    
+
+    const options = {
+        page: _page,
+        limit: perPage
+    }
+    const {totalDocs, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage, pagingCounter} = 
+    await Product.paginate({title: {$regex: query, $options: 'is'}}, options);
+    
+    if(docs){
+        res.render('products/search', {docs, query, page, nextPage, prevPage, totalDocs, hasPrevPage, hasNextPage, normalQuery});
+    }
+
+    console.log(pagingCounter, hasPrevPage);
 }
 
 productCtrl.renderAdd = (req, res) => {
@@ -102,7 +126,7 @@ productCtrl.productView = async(req, res) => {
 productCtrl.deleted = async(req, res) => {
     const {id} = req.params;
     if(req.user.role == 'admin'){
-        const productDeleted = await Product.findByIdAndRemove(id);
+        const productDeleted = await Product.findByIdAndDelete(id);
         await unlink(path.resolve('./src/public' + productDeleted.path));
         req.flash('success_msg', 'Product deleted');
         res.redirect('/');

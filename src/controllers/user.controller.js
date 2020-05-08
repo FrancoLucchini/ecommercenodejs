@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const passport = require('passport');
+const Order = require('../models/order');
+const Cart = require('../models/cart');
 
 userCtrl = {}
 
@@ -67,17 +69,26 @@ userCtrl.logout = (req, res) => {
     res.redirect('/');
 }
 
-userCtrl.renderAdmin = (req, res) => {
-    if(req.user){
-        if(req.user.role == 'admin'){
-            res.render('users/admin');
-        }else{
-            req.flash('error_msg', 'Not authorized');
-            res.redirect('/');
+userCtrl.profile = async(req, res) => {
+    const {id} = req.params;
+    const user = await User.findById(id);
+    const orders = await Order.find({user});
+   
+        if(!orders){
+            req.flash("You have no orders");
+            res.redirect(`/user/profile/${id}`);
+        } else{
+            var cart;
+            orders.forEach(function(order){
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            });
+            res.render('users/profile', {user, orders});
         }
-    } else{
-        res.redirect('/');
-    }
+
+
+
 }
+
 
 module.exports = userCtrl;

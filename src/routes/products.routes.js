@@ -4,11 +4,13 @@ const router = Router();
 const {isAuthenticated} = require('../helpers/helper');
 
 const {renderIndex ,renderAdd, add, productView, deleted, 
-    renderEdit, edit, addToCart, renderCart, renderCheckout, checkout, renderProducts} = require('../controllers/product.controller');
+    renderEdit, edit, addToCart, renderCart, renderCheckout, 
+    checkout, renderProducts, search} = require('../controllers/product.controller');
 
 
 router.get('/', renderIndex);
 router.get('/products/:page', renderProducts);
+router.get('/search/:page', search);
 
 router.get('/product/add', isAuthenticated, renderAdd);
 router.post('/product/add', isAuthenticated, add);

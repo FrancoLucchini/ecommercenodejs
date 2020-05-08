@@ -1,0 +1,25 @@
+footer{
+  background-color: #56CC9D;
+}
+
+footer .social {
+    text-align: center;
+    padding: 20px 0; }
+    
+    footer .social a {
+      padding: 10px;
+      display: inline-block;
+      margin: 0 20px;
+      width: 50px;
+      font-size: 22px;
+      color: #ffffff;
+      background: #000000;
+      border-radius: 100px; }
+      footer .social a:hover {
+        text-decoration: none; }
+      footer .social a.facebook {
+        background: #3b5998; }
+      footer .social a.twitter {
+        background: #55acee; }
+      footer .social a.youtube {
+        background: #cd201f; }

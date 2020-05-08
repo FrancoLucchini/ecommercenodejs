@@ -20,8 +20,8 @@
                             {{#each products}}
                             <tr>
                                 <td>{{this.item.title}}</td>
-                                <td>{{qty}}</td>
-                                <td>${{price}}</td>
+                                <td>{{this.qty}}</td>
+                                <td>${{this.item.price}}</td>
                                 <td>Action</td>
                             </tr>
                             {{/each}}

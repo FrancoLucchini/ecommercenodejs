@@ -1,0 +1,43 @@
+<div class="container p-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="float-right">{{user.username}}</h4>
+            <p class="h3 float-left">My Orders</p>
+            <hr class="mt-5">
+            {{#each orders}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cart</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Order status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.items}}
+                    <tr>
+                        <td>
+                            {{this.item.title}} <br>
+                        </td>
+                        <td>
+                            {{this.item.price}} <br>
+
+                        </td>
+                        <td>
+                            {{this.qty}} <br>
+                        </td>
+                        <td>
+                            {{this.price}} <br>
+                        </td>
+                    {{/each}}
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-right h2">Total Price: {{this.cart.totalPrice}}</p> 
+            <p class="text-right mb-5"><small>PaymentId: {{paymentId}}</small></p>
+            {{/each}}
+        </div>
+    </div>
+</div>
