@@ -85,10 +85,57 @@ userCtrl.profile = async(req, res) => {
             });
             res.render('users/profile', {user, orders});
         }
-
-
-
 }
 
+userCtrl.viewOrder = async(req, res) => {
+    if(req.user.role == 'admin'){
+        const {id} = req.params;
+        const order = await Order.findById(id);
+        const user = await User.findById(order.user)
+    
+        if(order){
+            var cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            };
+            res.render('users/order', {order, user});
+        } else{
+            req.flash('error_msg', 'The order does not exist');
+        }
+    }
+
+userCtrl.adminOrders = async(req, res) => {
+    const orders = await Order.find({});
+    if(req.user.role == 'admin'){
+
+        if(!orders){
+            req.flash('error_msg', 'No orders');
+            res.redirect('/user/admin/orders');
+        } else{
+            var cart;
+            orders.forEach(function(order){
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            });
+            res.render('users/adminpanel', {orders});
+        }
+    } else{
+        req.flash('error_msg', 'Not authorized');
+        res.redirect('/');
+    }
+}
+
+userCtrl.finishOrder = async(req, res) => {
+    const {id} = req.params;
+
+    if(req.user.role == 'admin'){
+        const status = 'Finish';
+        const order = await Order.findByIdAndUpdate(id, {status});
+        req.flash('success_msg', 'Order finished');
+        res.redirect('/user/admin/orders');
+    } else{
+        req.flash('error_msg', 'Not Authorized');
+        res.redirect('/');
+    }
+}
 
 module.exports = userCtrl;

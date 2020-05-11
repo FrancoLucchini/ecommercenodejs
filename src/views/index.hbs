@@ -35,7 +35,7 @@
         <h2>Featured Products</h2>
         <hr>
         <div class="row">
-            {{#each products}}
+            {{#each docs}}
             <div class="col-md-3">
                 <div class="card mb-3">
                     <a href="product/{{id}}"><img src="{{path}}" class="card-img-top" style="max-height: 200px;"></a>
@@ -49,3 +49,5 @@
             {{/each}}
         </div>
     </div>
+
+    {{>footer}}

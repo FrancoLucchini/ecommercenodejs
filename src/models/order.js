@@ -6,7 +6,8 @@ const order = new Schema({
     address: {type: String, required: true},
     numberAddress: {type: String, required: true},
     name: {type: String, required: true},
-    paymentId: {type: String, required:true}
+    paymentId: {type: String, required:true},
+    status: {type: String, default: 'In proccess'}
 });
 
 module.exports = model('Order', order);

@@ -12,34 +12,37 @@ productCtrl = {}
 
 productCtrl.renderIndex = async(req, res) => {
     const perPage = 12;
-    const page = req.params.page || 1;
+    const _page = req.params.page || 1;
 
-    await Product
-    .find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec((err, products) => {
-        Product.countDocuments((err, count) => {
-            if(err) return next(err);
-            res.render('index', {products, current: page, pages: Math.ceil(count / perPage)});
-        })
-    });
+    const options = {
+        page: _page,
+        limit: perPage
+    }
+    const {totalDocs, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage} = 
+    await Product.paginate({}, options);
+    
+    if(docs){
+        res.render('index', {docs, page, nextPage, prevPage, 
+            totalDocs, hasPrevPage, hasNextPage});
+        }
+
 }
 
 productCtrl.renderProducts = async(req, res) => {
     const perPage = 12;
-    const page = req.params.page || 1;
+    const _page = req.params.page || 1;
 
-    await Product
-    .find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec((err, products) => {
-        Product.countDocuments((err, count) => {
-            if(err) return next(err);
-            res.render('products/products', {products, pagination: {page: page, pageCount: Math.ceil(count / perPage)}});
-        })
-    });
+    const options = {
+        page: _page,
+        limit: perPage
+    }
+    const {totalPages, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage} = 
+    await Product.paginate({}, options);
+    
+    if(docs){
+        res.render('products/products', {docs, page, nextPage, prevPage, 
+            totalPages, hasPrevPage, hasNextPage});
+        }
 }
 
 productCtrl.search = async(req, res) => {
@@ -54,14 +57,14 @@ productCtrl.search = async(req, res) => {
         page: _page,
         limit: perPage
     }
-    const {totalDocs, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage, pagingCounter} = 
+    const {totalDocs, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage} = 
     await Product.paginate({title: {$regex: query, $options: 'is'}}, options);
     
     if(docs){
-        res.render('products/search', {docs, query, page, nextPage, prevPage, totalDocs, hasPrevPage, hasNextPage, normalQuery});
-    }
+        res.render('products/search', {docs, query, page, nextPage, prevPage, 
+            totalDocs, hasPrevPage, hasNextPage, normalQuery});
+        }
 
-    console.log(pagingCounter, hasPrevPage);
 }
 
 productCtrl.renderAdd = (req, res) => {

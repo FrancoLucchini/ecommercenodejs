@@ -12,6 +12,7 @@
                         <th>Status</th>
                         <th>PaymentId</th>
                         <th>Total</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,8 +33,11 @@
                         <td>
                             {{paymentId}}
                         </td>
+                        <td>{{this.cart.totalPrice}}</td>
                         <td>
-                            {{this.cart.totalPrice}}
+                            <form action="/user/admin/order/{{id}}/finish?_method=PUT" method="POST">
+                            <button class="btn btn-success btn-block">Finish</button>
+                            </form>
                         </td>
                     </tr>
             {{/each}}

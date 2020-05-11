@@ -29,4 +29,7 @@ router.get('/cart', isAuthenticated, renderCart);
 router.get('/checkout', isAuthenticated,renderCheckout);
 router.post('/checkout', isAuthenticated, checkout);
 
+
+
+
 module.exports = router;
