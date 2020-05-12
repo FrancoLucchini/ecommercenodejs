@@ -16,7 +16,7 @@ router.get('/logout', isAuthenticated, logout);
 router.get('/profile/:id', isAuthenticated, profile);
 
 router.get('/admin/orders', isAuthenticated, adminOrders);
-router.get('/admin/order/:id', isAuthenticated, viewOrder);
+router.get('/order/:id', isAuthenticated, viewOrder);
 
 router.put('/admin/order/:id/finish', isAuthenticated, finishOrder);
 

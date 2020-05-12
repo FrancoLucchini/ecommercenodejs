@@ -88,7 +88,6 @@ userCtrl.profile = async(req, res) => {
 }
 
 userCtrl.viewOrder = async(req, res) => {
-    if(req.user.role == 'admin'){
         const {id} = req.params;
         const order = await Order.findById(id);
         const user = await User.findById(order.user)
@@ -96,12 +95,9 @@ userCtrl.viewOrder = async(req, res) => {
         if(order){
             var cart = new Cart(order.cart);
                 order.items = cart.generateArray();
-            };
-            res.render('users/order', {order, user});
-        } else{
-            req.flash('error_msg', 'The order does not exist');
         }
-    }
+        res.render('users/order', {order, user});
+}
 
 userCtrl.adminOrders = async(req, res) => {
     const orders = await Order.find({});
