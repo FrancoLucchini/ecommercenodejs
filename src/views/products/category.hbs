@@ -1,0 +1,38 @@
+    <div class="container p-5">
+        <h2>{{category}}</h2>
+        <hr>
+        <div class="row">
+            {{#each docs}}
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <a href="../product/{{id}}"><img src="{{path}}" class="card-img-top" style="max-height: 200px;"></a>
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><strong>{{title}}</strong></h5>
+                        <p class="card-text text-center">${{price}}</p>
+                        <a href="product/{{id}}"><button class="btn btn-lg btn-block btn-success">View
+                                Product</button></a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="row">
+            <nav class="navbar mx-auto">
+                <ul class="pagination">
+                        <li class="page-item">
+                            <a href="{{prevPage}}" 
+                            class="page-link"><</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="{{page}}" 
+                            class="page-link">{{page}}</a>
+                        </li>
+                        <li class="page-item">
+                            <a href="{{nextPage}}" 
+                            class="page-link">></a>
+                        </li>
+                    </ul>
+            </nav>
+            </form>
+        </div>
+    </div>

@@ -69,6 +69,8 @@ userCtrl.logout = (req, res) => {
     res.redirect('/');
 }
 
+//GET
+
 userCtrl.profile = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(id);
@@ -99,8 +101,35 @@ userCtrl.viewOrder = async(req, res) => {
         res.render('users/order', {order, user});
 }
 
+
+
 userCtrl.adminOrders = async(req, res) => {
-    const orders = await Order.find({});
+    const orders = await Order.find({status: {$regex: 'In proccess', $options: 'is'}});
+    
+    var boolean = true;
+
+    if(req.user.role == 'admin'){
+
+        if(!orders){
+            req.flash('error_msg', 'No orders');
+            res.redirect('/user/admin/orders');
+        } else{
+            var cart;
+            orders.forEach(function(order){
+                cart = new Cart(order.cart);
+                order.items = cart.generateArray();
+            });
+            res.render('users/adminpanel', {orders, boolean});
+        }
+    } else{
+        req.flash('error_msg', 'Not authorized');
+        res.redirect('/');
+    }
+}
+
+userCtrl.adminOrdersFinish = async(req, res) => {
+    const orders = await Order.find({status: {$regex: 'Finished', $options: 'is'}});
+
     if(req.user.role == 'admin'){
 
         if(!orders){
@@ -113,20 +142,39 @@ userCtrl.adminOrders = async(req, res) => {
                 order.items = cart.generateArray();
             });
             res.render('users/adminpanel', {orders});
+            console.log(boolean);
         }
     } else{
         req.flash('error_msg', 'Not authorized');
         res.redirect('/');
     }
+
 }
 
+
+
+//PUT
 userCtrl.finishOrder = async(req, res) => {
     const {id} = req.params;
 
     if(req.user.role == 'admin'){
-        const status = 'Finish';
+        const status = 'Finished';
         const order = await Order.findByIdAndUpdate(id, {status});
         req.flash('success_msg', 'Order finished');
+        res.redirect('/user/admin/orders');
+    } else{
+        req.flash('error_msg', 'Not Authorized');
+        res.redirect('/');
+    }
+}
+
+userCtrl.inProccessOrder = async(req, res) => {
+    const {id} = req.params;
+
+    if(req.user.role == 'admin'){
+        const status = 'In Proccess';
+        const order = await Order.findByIdAndUpdate(id, {status});
+        req.flash('success_msg', 'Order in proccess');
         res.redirect('/user/admin/orders');
     } else{
         req.flash('error_msg', 'Not Authorized');

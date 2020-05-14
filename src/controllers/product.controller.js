@@ -51,8 +51,6 @@ productCtrl.search = async(req, res) => {
     const query = new RegExp(req.query.search);
     const normalQuery = req.query.search;
 
-    
-
     const options = {
         page: _page,
         limit: perPage
@@ -64,7 +62,23 @@ productCtrl.search = async(req, res) => {
         res.render('products/search', {docs, query, page, nextPage, prevPage, 
             totalDocs, hasPrevPage, hasNextPage, normalQuery});
         }
+}
+productCtrl.category = async(req, res) => {
+    const perPage = 12;
+    const _page = req.params.page || 1;
+    const category = req.params.category;
 
+    const options = {
+        page: _page,
+        limit: perPage
+    }
+    const {totalDocs, docs, page, nextPage, hasNextPage, hasPrevPage, prevPage} = 
+    await Product.paginate({category: {$regex: category, $options: 'is'}}, options);
+    
+    if(docs){
+        res.render('products/category', {docs, page, nextPage, prevPage, 
+            totalDocs, hasPrevPage, hasNextPage, category});
+        }
 }
 
 productCtrl.renderAdd = (req, res) => {
@@ -187,10 +201,13 @@ productCtrl.edit = async(req, res) => {
 
 productCtrl.addToCart = async (req, res) => {
     const {id} = req.params;
+    const {quantity} = req.body;
+
     var cart = new Cart(req.session.cart ? req.session.cart : {});
     const product = await Product.findById(id);
+
     if(product){
-        cart.add(product, product.id);
+        cart.add(product, product.id, quantity);
         req.session.cart = cart;
         res.redirect('/');
     }

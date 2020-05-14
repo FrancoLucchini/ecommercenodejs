@@ -8,16 +8,21 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="/products/1" class="nav-link mr-4">Products</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="/category/games/1">Games</a>
+                        <a class="dropdown-item" href="/category/movies/1">Movies</a>
+                    </div>
                 </li>
             </ul>
+
             <ul class="navbar-nav navbar-center">
                 <form class="form-inline my-2 my-lg-0 ml-5" action="/search/1" method="GET">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search"
@@ -25,8 +30,6 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
                             class="fas fa-search"></i></button>
                 </form>
-
-
             </ul>
             <ul class="navbar-nav ml-auto">
                 {{#if user}}
@@ -38,7 +41,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/product/add">Add product</a>
-                        <a class="dropdown-item" href="/user/admin/orders">Orders</a>
+                        <a class="dropdown-item" href="/user/admin/orders">Orders in proccess</a>
+                        <a class="dropdown-item" href="/user/admin/orders-finished">Orders finished</a>
                     </div>
                 </li>
                 {{/if}}
@@ -57,8 +61,6 @@
                         <a class="nav-link mr-4" href="/user/signup">SignUp</a>
                     </li>
                     {{/if}}
-
-
                     <li class="nav-item">
                         <a href="/cart"><i class="fas fa-shopping-cart">({{session.cart.totalQty}})</i></a>
                     </li>

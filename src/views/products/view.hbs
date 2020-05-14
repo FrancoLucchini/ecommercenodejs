@@ -14,23 +14,24 @@
             <p>{{description}}</p>
             <hr>
             <p class="text-success"><strong>${{price}}</strong></p>
-            {{!-- <form action="/addcart" method="POST"> --}}
-            {{!-- <label for="quantity">Quantity</label>
-            <input type="number" placeholder="" class="form-control" name="quantity"> --}}
-            <a href="/add-to-cart/{{id}}"><button class="btn btn-lg btn-block btn-success mt-4">Add to cart<i class="fas fa-shopping-cart">
-            </i></button></a>
-            {{!-- </form> --}}
+            <form action="/add-to-cart/{{id}}" method="POST">
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity" class="form-control" value="1">
+                <button class="btn btn-lg btn-block btn-success mt-4">
+                    Add to cart<i class="fas fa-shopping-cart"></i>
+                    </button>
+            </form>
         </div>
     </div>
 
 
-<script>
-    const btn = document.getElementById('delete');
-    btn.addEventListener('click', function(){
-    if(confirm('Are you really sure to delete this product')){
-        window.location = '/product/delete/{{id}}'
-    } else{
-        return false
-    }
-    })
-</script>
+    <script>
+        const btn = document.getElementById('delete');
+        btn.addEventListener('click', function () {
+            if (confirm('Are you really sure to delete this product')) {
+                window.location = '/product/delete/{{id}}'
+            } else {
+                return false
+            }
+        })
+    </script>
