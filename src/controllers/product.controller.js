@@ -213,6 +213,23 @@ productCtrl.addToCart = async (req, res) => {
     }
 };
 
+productCtrl.reduceOne = async(req, res) => {
+    const {id} = req.params;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    cart.reduceOne(id);
+    req.session.cart = cart;
+    res.redirect('/cart');
+}
+productCtrl.remove = async(req, res) => {
+    const {id} = req.params;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    cart.remove(id);
+    req.session.cart = cart;
+    res.redirect('/cart');
+}
+
 productCtrl.renderCart = (req, res) => {
     if(!req.session.cart){
         return res.render('shop/shop', {products: null});
@@ -220,6 +237,7 @@ productCtrl.renderCart = (req, res) => {
 
     var cart = new Cart(req.session.cart);
     res.render('shop/shop', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+    console.log(cart.generateArray());
 }
 
 productCtrl.renderCheckout = (req, res) => {

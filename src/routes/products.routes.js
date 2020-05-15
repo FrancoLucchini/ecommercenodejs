@@ -5,7 +5,7 @@ const {isAuthenticated} = require('../helpers/helper');
 
 const {renderIndex ,renderAdd, add, productView, deleted, 
     renderEdit, edit, addToCart, renderCart, renderCheckout, 
-    checkout, renderProducts, search, category} = require('../controllers/product.controller');
+    checkout, renderProducts, search, category, reduceOne, remove} = require('../controllers/product.controller');
 
 
 router.get('/', renderIndex);
@@ -26,6 +26,9 @@ router.put('/product/edit/:id', isAuthenticated, edit);
 
 router.post('/add-to-cart/:id', isAuthenticated, addToCart);
 router.get('/cart', isAuthenticated, renderCart);
+
+router.get('/reduce/:id', isAuthenticated, reduceOne)
+router.get('/remove/:id', isAuthenticated, remove);
 
 router.get('/checkout', isAuthenticated,renderCheckout);
 router.post('/checkout', isAuthenticated, checkout);

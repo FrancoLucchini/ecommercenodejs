@@ -24,7 +24,8 @@
                                 <td>{{this.qty}}</td>
                                 <td>${{this.item.price}}</td>
                                 <td>${{this.price}}</td>
-                                <td>Action</td>
+                                <td><button class="btn btn-block btn-danger"><a href="/reduce/{{this.item._id}}">Reduce one</a></button>
+                                <button class="btn btn-block btn-danger"><a href="/remove/{{this.item._id}}">Remove</a></button></td>
                             </tr>
                             {{/each}}
                         </tbody>
