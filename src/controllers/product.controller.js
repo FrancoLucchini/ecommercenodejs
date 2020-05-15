@@ -288,6 +288,4 @@ productCtrl.checkout = async (req, res) =>{
     res.redirect('/');
 }
 
-
-
 module.exports = productCtrl;
