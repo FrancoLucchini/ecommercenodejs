@@ -4,7 +4,7 @@ const Order = require('../models/order');
 
 const {unlink} = require('fs-extra');
 const path = require('path');
-const stripe = require('stripe')('sk_test_iHmNAmCjmIrKpzkcqC5gWBPA00RSFYzDyI');
+const stripe = require('stripe')(process.env.SECRET_KEY);
 
 
 
