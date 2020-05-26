@@ -6,6 +6,13 @@ const {unlink} = require('fs-extra');
 const path = require('path');
 const stripe = require('stripe')(process.env.SECRET_KEY);
 
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET_KEY
+})
 
 
 productCtrl = {}
@@ -116,7 +123,11 @@ productCtrl.add = async (req, res) => {
                 product.title = title;
                 product.description = description;
                 product.category = category;
-                product.path = '/img/' + req.file.filename;
+
+                const result = await cloudinary.v2.uploader.upload(req.file.path);     
+                product.path = result.url;
+                await unlink(req.file.path);
+
                 product.price = price;
                 await product.save();
                 req.flash('success_msg', 'Product added successfully');
@@ -180,13 +191,15 @@ productCtrl.edit = async(req, res) => {
             if(errors.length > 0){
                 res.render('products/add', {errors, title, description, category, price});
             } else if(req.file){
+                const {url} = await cloudinary.v2.uploader.upload(req.file.path);     
+                await unlink(req.file.path);
                 const product = {
                     title: title,
                     description: description,
                     category: category,
-                    price: price,
-                    path: '/img/' + req.file.filename
+                    price: price
                 } 
+                product.path = url;
                 await Product.findByIdAndUpdate(req.params.id, {$set: product});
             }else{
                 await Product.findByIdAndUpdate(req.params.id, {title, description, category, price});
