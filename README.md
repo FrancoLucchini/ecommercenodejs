@@ -12,4 +12,6 @@ Projecto personal de Franco Lucchini
 
 ![Alt Text](https://res.cloudinary.com/dhxmpnk9i/image/upload/v1595972128/Anotaci%C3%B3n_2020-07-28_181236_sbmfjd.png)
 
+![Alt Text](https://res.cloudinary.com/dhxmpnk9i/image/upload/v1595972127/Anotaci%C3%B3n_2020-07-28_181237_c81wky.png)
+
 ![Alt Text](https://res.cloudinary.com/dhxmpnk9i/image/upload/v1595972131/Anotaci%C3%B3n_2020-07-28_181537_fuyh2w.png)
